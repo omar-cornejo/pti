@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Style Gallery - TrendLens</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+
+      .filter-tag {
+        transition: all 0.2s ease;
+      }
+
+      .filter-tag:hover {
+        transform: translateY(-1px);
+      }
+
+      .product-card {
+        transition: all 0.3s ease;
+      }
+
+      .product-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+      }
+
+      .badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        padding: 4px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .glow-button {
+        box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+        transition: all 0.3s ease;
+      }
+
+      .glow-button:hover {
+        box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
+    <!-- Header -->
+    {% set header_style = 'dark' %}
+    {% set header_position = 'static' %}
+    {% include '_header.html' %}
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-6 py-8">
+      <div class="flex gap-8">
+        <!-- Sidebar Filters -->
+        <aside class="w-64 flex-shrink-0">
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200 sticky top-8">
+            <div class="flex items-center justify-between mb-6">
+              <h3 class="text-lg font-bold text-gray-900">Filters</h3>
+              <button class="text-sm text-purple-600 hover:text-purple-700 font-medium">Clear All</button>
+            </div>
+
+            <!-- AI Recommendations -->
+            <div class="mb-6">
+              <div class="flex items-center space-x-2 mb-3">
+                <input type="checkbox" id="ai-rec" checked class="w-4 h-4 text-purple-600 rounded focus:ring-purple-500" />
+                <label for="ai-rec" class="text-sm font-semibold text-gray-900">AI Recommendations</label>
+              </div>
+              <p class="text-xs text-gray-500 mb-3">Based on your style preferences</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium filter-tag">Minimalist</span>
+                <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium filter-tag">Casual</span>
+                <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium filter-tag">Summer</span>
+              </div>
+            </div>
+
+            <hr class="my-6 border-gray-200" />
+
+            <!-- Brands -->
+            <div class="mb-6">
+              <h4 class="text-sm font-bold text-gray-900 mb-3">Brands</h4>
+              <div class="space-y-2.5">
+                <label class="flex items-center space-x-2 cursor-pointer">
+                  <input type="checkbox" class="w-4 h-4 text-purple-600 rounded focus:ring-purple-500" />
+                  <span class="text-sm text-gray-700">Nike</span>
+                  <span class="text-xs text-gray-400 ml-auto">247</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer">
+                  <input type="checkbox" checked class="w-4 h-4 text-purple-600 rounded focus:ring-purple-500" />
+                  <span class="text-sm text-gray-700">Adidas</span>
+                  <span class="text-xs text-gray-400 ml-auto">163</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer">
+                  <input type="checkbox" class="w-4 h-4 text-purple-600 rounded focus:ring-purple-500" />
+                  <span class="text-sm text-gray-700">Zara</span>
+                  <span class="text-xs text-gray-400 ml-auto">195</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer">
+                  <input type="checkbox" class="w-4 h-4 text-purple-600 rounded focus:ring-purple-500" />
+                  <span class="text-sm text-gray-700">H&M</span>
+                  <span class="text-xs text-gray-400 ml-auto">314</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer">
+                  <input type="checkbox" class="w-4 h-4 text-purple-600 rounded focus:ring-purple-500" />
+                  <span class="text-sm text-gray-700">Uniqlo</span>
+                  <span class="text-xs text-gray-400 ml-auto">88</span>
+                </label>
+              </div>
+              <button class="text-sm text-purple-600 hover:text-purple-700 font-medium mt-3">Show more</button>
+            </div>
+
+            <hr class="my-6 border-gray-200" />
+
+            <!-- Category -->
+            <div class="mb-6">
+              <h4 class="text-sm font-bold text-gray-900 mb-3">Category</h4>
+              <div class="space-y-2.5">
+                <label class="flex items-center space-x-2 cursor-pointer">
+                  <input type="radio" name="category" class="w-4 h-4 text-purple-600 focus:ring-purple-500" />
+                  <span class="text-sm text-gray-700">Tops</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer">
+                  <input type="radio" name="category" class="w-4 h-4 text-purple-600 focus:ring-purple-500" />
+                  <span class="text-sm text-gray-700">Bottoms</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer">
+                  <input type="radio" name="category" class="w-4 h-4 text-purple-600 focus:ring-purple-500" />
+                  <span class="text-sm text-gray-700">Dresses</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer">
+                  <input type="radio" name="category" class="w-4 h-4 text-purple-600 focus:ring-purple-500" />
+                  <span class="text-sm text-gray-700">Footwear</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer">
+                  <input type="radio" name="category" class="w-4 h-4 text-purple-600 focus:ring-purple-500" />
+                  <span class="text-sm text-gray-700">Accessories</span>
+                </label>
+              </div>
+            </div>
+
+            <hr class="my-6 border-gray-200" />
+
+            <!-- Price Range -->
+            <div class="mb-6">
+              <h4 class="text-sm font-bold text-gray-900 mb-3">Price Range</h4>
+              <div class="space-y-2.5">
+                <label class="flex items-center space-x-2 cursor-pointer">
+                  <input type="radio" name="price" class="w-4 h-4 text-purple-600 focus:ring-purple-500" />
+                  <span class="text-sm text-gray-700">Under $50</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer">
+                  <input type="radio" name="price" class="w-4 h-4 text-purple-600 focus:ring-purple-500" />
+                  <span class="text-sm text-gray-700">$50 - $100</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer">
+                  <input type="radio" name="price" class="w-4 h-4 text-purple-600 focus:ring-purple-500" />
+                  <span class="text-sm text-gray-700">$100 - $200</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer">
+                  <input type="radio" name="price" class="w-4 h-4 text-purple-600 focus:ring-purple-500" />
+                  <span class="text-sm text-gray-700">Over $200</span>
+                </label>
+              </div>
+            </div>
+
+            <hr class="my-6 border-gray-200" />
+
+            <!-- Colors -->
+            <div class="mb-6">
+              <h4 class="text-sm font-bold text-gray-900 mb-3">Colors</h4>
+              <div class="grid grid-cols-6 gap-2">
+                <button class="w-8 h-8 bg-purple-600 rounded-full border-2 border-gray-300 hover:scale-110 transition"></button>
+                <button class="w-8 h-8 bg-black rounded-full border-2 border-gray-300 hover:scale-110 transition"></button>
+                <button class="w-8 h-8 bg-pink-500 rounded-full border-2 border-gray-300 hover:scale-110 transition"></button>
+                <button class="w-8 h-8 bg-red-500 rounded-full border-2 border-gray-300 hover:scale-110 transition"></button>
+                <button class="w-8 h-8 bg-cyan-500 rounded-full border-2 border-gray-300 hover:scale-110 transition"></button>
+                <button class="w-8 h-8 bg-green-500 rounded-full border-2 border-gray-300 hover:scale-110 transition"></button>
+                <button class="w-8 h-8 bg-yellow-400 rounded-full border-2 border-gray-300 hover:scale-110 transition"></button>
+                <button class="w-8 h-8 bg-gray-500 rounded-full border-2 border-gray-300 hover:scale-110 transition"></button>
+                <button class="w-8 h-8 bg-orange-500 rounded-full border-2 border-gray-300 hover:scale-110 transition"></button>
+                <button class="w-8 h-8 bg-amber-600 rounded-full border-2 border-gray-300 hover:scale-110 transition"></button>
+                <button class="w-8 h-8 bg-blue-600 rounded-full border-2 border-gray-300 hover:scale-110 transition"></button>
+                <button class="w-8 h-8 bg-indigo-600 rounded-full border-2 border-gray-300 hover:scale-110 transition"></button>
+              </div>
+            </div>
+
+            <hr class="my-6 border-gray-200" />
+
+            <!-- Size -->
+            <div>
+              <h4 class="text-sm font-bold text-gray-900 mb-3">Size</h4>
+              <div class="grid grid-cols-3 gap-2">
+                <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium hover:border-purple-600 hover:text-purple-600 transition">XS</button>
+                <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium hover:border-purple-600 hover:text-purple-600 transition">S</button>
+                <button class="px-3 py-2 border-2 border-purple-600 bg-purple-50 text-purple-600 rounded-lg text-sm font-medium transition">M</button>
+                <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium hover:border-purple-600 hover:text-purple-600 transition">L</button>
+                <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium hover:border-purple-600 hover:text-purple-600 transition">XL</button>
+                <button class="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium hover:border-purple-600 hover:text-purple-600 transition">XXL</button>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Gallery Content -->
+        <main class="flex-1">
+          <!-- Header -->
+          <div class="mb-6">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Style Gallery</h2>
+            <p class="text-gray-600">Discover AI-curated fashion from top brands</p>
+          </div>
+
+          <!-- Results Info & Sort -->
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center space-x-2">
+              <p class="text-sm text-gray-600">Showing 1,247 results</p>
+              <button class="text-sm text-purple-600 hover:text-purple-700 font-medium flex items-center space-x-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span>AI-enhanced results based on your preferences</span>
+              </button>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <span class="text-sm text-gray-600 font-medium">Sort by: Relevance</span>
+              <button class="p-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+              </button>
+              <button class="p-2 border border-gray-300 rounded-lg hover:border-gray-400 transition">
+                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Products Grid -->
+          <div class="grid grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Product 1 -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 product-card">
+              <div class="relative bg-gray-100 aspect-square">
+                <span class="badge bg-purple-600 text-white">NEW</span>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="w-48 h-48 bg-white rounded-full shadow-lg flex items-center justify-center">
+                    <span class="text-6xl">👟</span>
+                  </div>
+                </div>
+              </div>
+              <div class="p-4">
+                <p class="text-xs text-gray-500 mb-1">Men's Shoes</p>
+                <h3 class="font-semibold text-gray-900 mb-1">Air Max 270</h3>
+                <div class="flex items-center justify-between">
+                  <span class="text-lg font-bold text-gray-900">$150</span>
+                  <div class="flex items-center space-x-1">
+                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
+                    <span class="text-sm text-gray-600">4.8</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 product-card">
+              <div class="relative bg-gray-100 aspect-square">
+                <span class="badge bg-gray-900 text-white">TOP</span>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="text-8xl">👗</span>
+                </div>
+              </div>
+              <div class="p-4">
+                <p class="text-xs text-gray-500 mb-1">Women's Collection</p>
+                <h3 class="font-semibold text-gray-900 mb-1">Midi Dress</h3>
+                <div class="flex items-center justify-between">
+                  <span class="text-lg font-bold text-gray-900">$89</span>
+                  <div class="flex items-center space-x-1">
+                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
+                    <span class="text-sm text-gray-600">4.6</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 product-card">
+              <div class="relative bg-blue-50 aspect-square">
+                <span class="badge bg-blue-600 text-white">NEW</span>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="text-8xl">🧥</span>
+                </div>
+              </div>
+              <div class="p-4">
+                <p class="text-xs text-gray-500 mb-1">Unisex Outerwear</p>
+                <h3 class="font-semibold text-gray-900 mb-1">Denim Jacket</h3>
+                <div class="flex items-center justify-between">
+                  <span class="text-lg font-bold text-gray-900">$65</span>
+                  <div class="flex items-center space-x-1">
+                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
+                    <span class="text-sm text-gray-600">4.7</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 product-card">
+              <div class="relative bg-amber-50 aspect-square">
+                <span class="badge bg-red-600 text-white">SALE</span>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="text-8xl">👜</span>
+                </div>
+              </div>
+              <div class="p-4">
+                <p class="text-xs text-gray-500 mb-1">Women's Accessories</p>
+                <h3 class="font-semibold text-gray-900 mb-1">Leather Handbag</h3>
+                <div class="flex items-center justify-between">
+                  <span class="text-lg font-bold text-gray-900">$295</span>
+                  <div class="flex items-center space-x-1">
+                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
+                    <span class="text-sm text-gray-600">4.9</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 product-card">
+              <div class="relative bg-gradient-to-br from-cyan-100 to-blue-100 aspect-square">
+                <span class="badge bg-green-600 text-white">ADIDAS</span>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="text-8xl">👟</span>
+                </div>
+              </div>
+              <div class="p-4">
+                <p class="text-xs text-gray-500 mb-1">Running Shoes</p>
+                <h3 class="font-semibold text-gray-900 mb-1">UltraBoost 22</h3>
+                <div class="flex items-center justify-between">
+                  <span class="text-lg font-bold text-gray-900">$180</span>
+                  <div class="flex items-center space-x-1">
+                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
+                    <span class="text-sm text-gray-600">4.8</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 product-card">
+              <div class="relative bg-gray-50 aspect-square">
+                <span class="badge bg-orange-500 text-white">UNIQLO</span>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="text-8xl">👕</span>
+                </div>
+              </div>
+              <div class="p-4">
+                <p class="text-xs text-gray-500 mb-1">Basic Essentials</p>
+                <h3 class="font-semibold text-gray-900 mb-1">Cotton T-Shirt</h3>
+                <div class="flex items-center justify-between">
+                  <span class="text-lg font-bold text-gray-900">$10</span>
+                  <div class="flex items-center space-x-1">
+                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
+                    <span class="text-sm text-gray-600">4.5</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product 7 -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 product-card">
+              <div class="relative bg-purple-50 aspect-square">
+                <span class="badge bg-purple-600 text-white">FASHION</span>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="text-8xl">🕶️</span>
+                </div>
+              </div>
+              <div class="p-4">
+                <p class="text-xs text-gray-500 mb-1">Sunglasses</p>
+                <h3 class="font-semibold text-gray-900 mb-1">Aviator Classic</h3>
+                <div class="flex items-center justify-between">
+                  <span class="text-lg font-bold text-gray-900">$154</span>
+                  <div class="flex items-center space-x-1">
+                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
+                    <span class="text-sm text-gray-600">4.7</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product 8 -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 product-card">
+              <div class="relative bg-amber-100 aspect-square">
+                <span class="badge bg-black text-white">RETAIL</span>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="text-8xl">⌚</span>
+                </div>
+              </div>
+              <div class="p-4">
+                <p class="text-xs text-gray-500 mb-1">Men's Accessories</p>
+                <h3 class="font-semibold text-gray-900 mb-1">Steel Watch</h3>
+                <div class="flex items-center justify-between">
+                  <span class="text-lg font-bold text-gray-900">$190</span>
+                  <div class="flex items-center space-x-1">
+                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
+                    <span class="text-sm text-gray-600">4.8</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product 9 -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 product-card">
+              <div class="relative bg-rose-50 aspect-square">
+                <span class="badge bg-pink-600 text-white">TRENDING</span>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="text-8xl">👠</span>
+                </div>
+              </div>
+              <div class="p-4">
+                <p class="text-xs text-gray-500 mb-1">Women's Shoes</p>
+                <h3 class="font-semibold text-gray-900 mb-1">Classic Heels</h3>
+                <div class="flex items-center justify-between">
+                  <span class="text-lg font-bold text-gray-900">$125</span>
+                  <div class="flex items-center space-x-1">
+                    <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
+                    <span class="text-sm text-gray-600">4.9</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagination -->
+          <div class="flex items-center justify-center space-x-2 mt-12">
+            <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50 transition disabled:opacity-50" disabled>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+              </svg>
+            </button>
+            <button class="px-4 py-2 bg-purple-600 text-white rounded-lg font-medium">1</button>
+            <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50 transition">2</button>
+            <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50 transition">3</button>
+            <span class="px-2 text-gray-400">...</span>
+            <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50 transition">42</button>
+            <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50 transition">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </button>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    {% include '_footer.html' %}
+  </body>
+</html>

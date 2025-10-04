@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col min-h-screen bg-gray-900 text-gray-100">
+
+    <!-- Header -->
+    {% set header_style = 'dark' %}
+    {% set header_position = 'static' %}
+    {% include '_header.html' %}
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto p-4 flex flex-col items-center justify-center">
+        <h2 class="text-4xl font-bold mb-6 text-purple-500">Registro</h2>
+        <form method="POST" class="flex flex-col gap-4 w-full max-w-sm bg-black p-6 rounded-lg shadow-md">
+            <input type="text" name="username" placeholder="Usuario" required
+                   class="px-4 py-2 rounded bg-gray-800 text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500">
+            <input type="password" name="password" placeholder="Contraseña" required
+                   class="px-4 py-2 rounded bg-gray-800 text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500">
+            <button type="submit"
+                    class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition">Registrarse</button>
+        </form>
+        <p class="mt-4 text-gray-400">
+            ¿Ya tienes cuenta? 
+            <a href="{{ url_for('auth.login') }}" class="text-purple-400 hover:text-purple-600 font-medium">Login</a>
+        </p>
+    </main>
+
+    <!-- Footer -->
+    {% include '_footer.html' %}
+
+</body>
+</html>

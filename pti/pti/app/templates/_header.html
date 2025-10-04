@@ -1,0 +1,68 @@
+{#
+Reusable header include
+Inputs (set via {% set ... %} before include):
+- header_style: 'light' | 'dark' | 'transparent' (default 'dark')
+- header_position: 'fixed' | 'absolute' | 'static' (default 'static')
+#}
+{% set header_style = header_style or 'dark' %}
+{% set header_position = header_position or 'static' %}
+{% set is_light = header_style == 'light' %}
+{% set is_transparent = header_style == 'transparent' %}
+{% set ep = (request.endpoint or '') %}
+{% set header_container = '' if is_light else 'container mx-auto' %}
+
+<header class="
+  {% if is_light %}bg-white border-b border-gray-200{% elif is_transparent %}bg-transparent{% else %}bg-gray-900 shadow{% endif %}
+  {% if header_position == 'fixed' %} fixed top-0 left-0 right-0 z-50 {% elif header_position == 'absolute' %} absolute top-0 left-0 right-0 z-50 {% else %} relative z-40 {% endif %}
+">
+  <div class="{{ header_container }} flex justify-between items-center {% if is_light %}px-6 py-4{% else %}p-6 px-8{% endif %}">
+    <!-- Left: Brand -->
+    <a href="{{ url_for('main.home') }}" class="flex items-center space-x-3">
+      <div class="w-10 h-10 bg-gradient-to-br from-pink-500 to-purple-600 rounded-xl flex items-center justify-center">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+        </svg>
+      </div>
+  <h1 class="text-2xl font-bold {% if is_light %}text-gray-900{% else %}text-white{% endif %}">TrendLens</h1>
+    </a>
+
+    <!-- Center: Nav -->
+  <nav class="hidden md:flex items-center space-x-4 md:space-x-6">
+      {% set link_base = 'font-medium transition ' + ('px-3 py-2 rounded-lg' if is_light else '') %}
+      {% macro nav_link(label, endpoint) -%}
+        {%- set is_active = (ep == endpoint) -%}
+        <a href="{{ url_for(endpoint) }}"
+           class="{{ link_base }} {% if is_light %} {{ 'text-gray-900 bg-gray-100' if is_active else 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }} {% else %} {{ 'text-white' if is_active else 'text-gray-300 hover:text-white' }} {% endif %}">
+          {{ label }}
+        </a>
+      {%- endmacro %}
+      {{ nav_link('Home', 'main.home') }}
+      {{ nav_link('Features', 'main.features') }}
+      {{ nav_link('Gallery', 'main.gallery') }}
+    </nav>
+
+    <!-- Right: Auth or Profile -->
+    <div class="flex items-center space-x-4">
+      {% if session.get('user') %}
+        <details class="relative group">
+          <summary class="list-none cursor-pointer flex items-center space-x-3">
+            <img src="https://ui-avatars.com/api/?name={{ session.get('user')|replace(' ', '+') }}&background=8b5cf6&color=fff" alt="User" class="{% if is_light %}w-10 h-10{% else %}w-9 h-9{% endif %} rounded-full" />
+            <span class="font-medium {% if is_light %}text-gray-900{% else %}text-gray-200{% endif %} hidden sm:block">{{ session.get('user') }}</span>
+            <svg class="w-4 h-4 {% if is_light %}text-gray-600{% else %}text-gray-400{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </summary>
+          <div class="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-lg shadow-lg overflow-hidden z-50">
+            <a href="{{ url_for('main.dashboard') }}" class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
+            <a href="{{ url_for('auth.logout') }}" class="block px-4 py-2 hover:bg-gray-100">Cerrar sesión</a>
+          </div>
+        </details>
+      {% else %}
+        <a href="{{ url_for('auth.login') }}" class="{% if is_light %}text-gray-600 hover:text-gray-900{% else %}text-gray-300 hover:text-white{% endif %} font-medium transition">Sign In</a>
+        <a href="{{ url_for('auth.register') }}" class="px-6 py-2.5 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-lg font-semibold hover:from-pink-600 hover:to-purple-700 transition">
+          Get Started
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</header>
