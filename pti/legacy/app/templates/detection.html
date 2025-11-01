@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detección Inteligente - TrendLens</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+    
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .hero-text {
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .pill-button {
+      border: 3px solid #000000;
+      border-radius: 50px;
+      padding: 14px 36px;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.875rem;
+      letter-spacing: 0.08em;
+      transition: all 0.3s ease;
+      display: inline-block;
+      background-color: #000000;
+      color: #FFFFFF;
+    }
+
+    .pill-button:hover {
+      background-color: #FFFFFF;
+      color: #000000;
+      transform: translateY(-2px);
+    }
+
+    .pill-button-outline {
+      border: 3px solid #000000;
+      border-radius: 50px;
+      padding: 14px 36px;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.875rem;
+      letter-spacing: 0.08em;
+      transition: all 0.3s ease;
+      display: inline-block;
+      background-color: #FFFFFF;
+      color: #000000;
+    }
+
+    .pill-button-outline:hover {
+      background-color: #000000;
+      color: #FFFFFF;
+      transform: translateY(-2px);
+    }
+
+    .detection-card {
+      border: 3px solid #000000;
+      background: #FFFFFF;
+      transition: all 0.3s ease;
+    }
+
+    .detection-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 8px 8px 0px #000000;
+    }
+
+    .dropzone {
+      border: 3px dashed #000000;
+      background: #FFFFFF;
+      transition: all 0.3s ease;
+    }
+
+    .dropzone:hover {
+      transform: translateY(-2px);
+      box-shadow: 4px 4px 0px #000000;
+    }
+
+    .dropzone.dragover {
+      border-style: solid;
+      background-color: #f8f8f8;
+      transform: scale(1.02);
+    }
+
+    .result-item {
+      border: 2px solid #000000;
+      background: #FFFFFF;
+      transition: all 0.3s ease;
+    }
+
+    .result-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 4px 4px 0px #000000;
+    }
+
+    .asterisk {
+      font-size: 3rem;
+      font-weight: 700;
+    }
+
+    .confidence-bar {
+      background: linear-gradient(90deg, #000000, #666666);
+      transition: width 0.5s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-slide-up {
+      animation: slideUp 0.8s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="bg-white text-black min-h-screen flex flex-col">
+  {% set header_style = 'light' %}
+  {% set header_position = 'static' %}
+  {% include '_header.html' %}
+
+  <main class="flex-1">
+    <div class="container mx-auto px-8 py-16">
+      <!-- Header Section -->
+      <div class="text-center mb-16 animate-slide-up">
+        <div class="asterisk mb-4">✱</div>
+        <h1 class="hero-text mb-6">DETECCIÓN<br/>INTELIGENTE</h1>
+        <p class="text-lg font-medium text-gray-600 max-w-2xl mx-auto">
+          Sube una imagen para identificar prendas automáticamente con nuestra tecnología AI avanzada
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-12">
+        <!-- Upload Panel -->
+        <section class="animate-slide-up" style="animation-delay: 0.2s;">
+          <div class="detection-card rounded-lg p-8">
+            <h2 class="text-2xl font-bold mb-6">Subir Imagen</h2>
+            
+            <form method="POST" enctype="multipart/form-data" class="space-y-6" id="detect-form">
+              <div id="drop-area" class="dropzone rounded-lg p-8 text-center">
+                <div id="preview" class="w-full max-w-md mx-auto aspect-[4/3] bg-gray-50 border-2 border-gray-200 rounded-lg flex items-center justify-center overflow-hidden mb-6">
+                  <div class="text-gray-500 text-center">
+                    <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                    </svg>
+                    <p class="font-bold text-lg mb-2">Arrastra tu imagen aquí</p>
+                    <p class="text-sm text-gray-400">o haz clic para seleccionarla</p>
+                  </div>
+                </div>
+
+                <input id="file-input" name="image" type="file" accept="image/png, image/jpeg, image/webp" class="sr-only" />
+                <button type="button" id="choose-btn" class="pill-button-outline mb-4">
+                  Elegir Archivo
+                </button>
+                <p class="text-xs text-gray-500">JPEG, PNG, WEBP · Máximo 15MB</p>
+              </div>
+
+              <div class="flex items-center justify-between pt-4">
+                <div class="text-sm font-medium text-gray-600">
+                  {% if detections %}
+                    {{ detections|length }} items detectados
+                  {% else %}
+                    Listo para detectar
+                  {% endif %}
+                </div>
+                <div class="space-x-4">
+                  <button type="reset" id="reset-btn" class="pill-button-outline">
+                    Limpiar
+                  </button>
+                  <button type="submit" class="pill-button">
+                    Detectar
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- Results Panel -->
+        <section class="animate-slide-up" style="animation-delay: 0.4s;">
+          <div class="detection-card rounded-lg p-8">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-2xl font-bold">Resultados</h2>
+              {% if detections %}
+                <span class="text-sm font-medium text-gray-600">{{ detections|length }} detectados</span>
+              {% endif %}
+            </div>
+
+            <div class="space-y-4" id="results-list">
+              {% if detections %}
+                {% for d in detections %}
+                  <div class="result-item rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full border-2 border-black flex items-center justify-center bg-white">
+                          <span class="text-xl">{{ d.icon }}</span>
+                        </div>
+                        <div>
+                          <p class="font-bold text-lg">{{ d.label }}</p>
+                          <div class="flex flex-wrap gap-2 mt-2">
+                            {% for tag in d.tags %}
+                              <span class="px-3 py-1 text-xs font-medium rounded-full border-2 border-black bg-white">{{ tag }}</span>
+                            {% endfor %}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="text-right">
+                        <p class="text-sm font-bold">{{ d.confidence }}% confianza</p>
+                        <div class="w-32 h-3 border-2 border-black rounded-full mt-2 overflow-hidden bg-white">
+                          <div class="h-full confidence-bar" data-width="{{ d.confidence }}"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              {% else %}
+                <div class="text-center py-12">
+                  <div class="text-gray-400 mb-4">
+                    <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                  <p class="text-gray-500 font-medium">No hay resultados todavía</p>
+                  <p class="text-sm text-gray-400">Sube una imagen y pulsa Detectar</p>
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="mt-8 flex items-center justify-between pt-4 border-t-2 border-black">
+              <span class="text-xs font-medium text-gray-500 uppercase tracking-wider">Privado y Seguro</span>
+              <button class="pill-button-outline">Exportar</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  {% include '_footer.html' %}
+
+  <script>
+    const fileInput = document.getElementById('file-input');
+    const chooseBtn = document.getElementById('choose-btn');
+    const dropArea = document.getElementById('drop-area');
+    const preview = document.getElementById('preview');
+    const resetBtn = document.getElementById('reset-btn');
+
+    chooseBtn?.addEventListener('click', () => fileInput.click());
+
+    function showPreview(file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        preview.innerHTML = `<img src="${e.target.result}" alt="preview" class="w-full h-full object-contain">`;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    fileInput?.addEventListener('change', (e) => {
+      showPreview(e.target.files[0]);
+    });
+
+    // Drag and drop functionality
+    ['dragenter', 'dragover'].forEach(evt => {
+      dropArea.addEventListener(evt, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropArea.classList.add('dragover');
+      });
+    });
+
+    ['dragleave', 'drop'].forEach(evt => {
+      dropArea.addEventListener(evt, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropArea.classList.remove('dragover');
+      });
+    });
+
+    dropArea.addEventListener('click', () => fileInput.click());
+    
+    dropArea.addEventListener('drop', (e) => {
+      const dt = e.dataTransfer;
+      if (!dt?.files?.length) return;
+      fileInput.files = dt.files;
+      showPreview(dt.files[0]);
+    });
+
+    resetBtn?.addEventListener('click', () => {
+      fileInput.value = '';
+      preview.innerHTML = `<div class="text-gray-500 text-center">
+        <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+        </svg>
+        <p class="font-bold text-lg mb-2">Arrastra tu imagen aquí</p>
+        <p class="text-sm text-gray-400">o haz clic para seleccionarla</p>
+      </div>`;
+    });
+
+    // Apply widths for confidence bars
+    document.querySelectorAll('.confidence-bar').forEach(el => {
+      const w = el.getAttribute('data-width');
+      if (w) {
+        setTimeout(() => {
+          el.style.width = `${w}%`;
+        }, 200);
+      }
+    });
+  </script>
+</body>
+</html>

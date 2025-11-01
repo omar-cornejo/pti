@@ -1,0 +1,69 @@
+{#
+Reusable header include
+Inputs (set via {% set ... %} before include):
+- header_style: 'light' | 'dark' | 'transparent' (default 'dark')
+- header_position: 'fixed' | 'absolute' | 'static' (default 'static')
+#}
+{% set header_style = header_style or 'dark' %}
+{% set header_position = header_position or 'static' %}
+{% set is_light = header_style == 'light' %}
+{% set is_transparent = header_style == 'transparent' %}
+{% set ep = (request.endpoint or '') %}
+<header class="
+  bg-white
+  h-20
+  {% if header_position == 'fixed' %} fixed top-0 left-0 right-0 z-50 {% elif header_position == 'absolute' %} absolute top-0 left-0 right-0 z-50 {% else %} relative z-40 {% endif %}
+  border-b border-gray-100
+">
+  <div class="container mx-auto flex justify-between items-center px-8 h-full">
+    <!-- Left: Brand -->
+    <a href="{{ url_for('main.home') }}" class="flex items-center">
+      <h1 class="text-xl font-black tracking-wider text-black uppercase">
+        TrendLens
+      </h1>
+    </a>
+
+    <!-- Center: Nav -->
+    <nav class="hidden md:flex items-center space-x-12">
+      {% macro nav_link(label, endpoint) -%}
+        {%- set is_active = (ep == endpoint) -%}
+        <a href="{{ url_for(endpoint) }}"
+           class="text-sm font-medium uppercase tracking-wider transition-colors duration-300 
+           {{ 'text-black border-b-2 border-black pb-1' if is_active else 'text-gray-600 hover:text-black' }}">
+          [ {{ label }} ]
+        </a>
+      {%- endmacro %}
+      {{ nav_link('HOME', 'main.home') }}
+      {{ nav_link('FEATURES', 'main.features') }}
+      {{ nav_link('GALLERY', 'main.gallery') }}
+    </nav>
+
+    <!-- Right: Contact -->
+    <div class="flex items-center">
+      {% if session.get('user') %}
+        <details class="relative group">
+          <summary class="list-none cursor-pointer flex items-center space-x-3">
+            <div class="flex items-center space-x-3">
+              <img src="https://ui-avatars.com/api/?name={{ session.get('user')|replace(' ', '+') }}&background=000000&color=fff" alt="User" class="w-8 h-8 rounded-full border border-gray-300" />
+              <span class="text-sm font-medium text-gray-800 hidden sm:block">{{ session.get('user') }}</span>
+              <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </summary>
+          <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden z-50">
+            <a href="{{ url_for('main.dashboard') }}" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors">Dashboard</a>
+            <a href="{{ url_for('auth.logout') }}" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors border-t border-gray-100">Cerrar sesión</a>
+          </div>
+        </details>
+      {% else %}
+        <div class="flex items-center space-x-6">
+          <a href="{{ url_for('auth.login') }}" class="text-sm font-medium uppercase tracking-wider text-gray-600 hover:text-black transition-colors duration-300">Sign In</a>
+          <a href="{{ url_for('auth.register') }}" class="text-sm font-medium uppercase tracking-wider text-black hover:text-gray-600 transition-colors duration-300 border-b border-black hover:border-gray-600 pb-1">
+            Register →
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</header>

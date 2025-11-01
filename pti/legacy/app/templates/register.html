@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - TrendLens</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .hero-text {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            line-height: 1;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+
+        .pill-button {
+            border: 3px solid #000000;
+            border-radius: 50px;
+            padding: 16px 40px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.08em;
+            transition: all 0.3s ease;
+            display: inline-block;
+            background-color: #000000;
+            color: #FFFFFF;
+        }
+
+        .pill-button:hover {
+            background-color: #FFFFFF;
+            color: #000000;
+            transform: translateY(-2px);
+        }
+
+        .form-input {
+            border: 3px solid #000000;
+            border-radius: 8px;
+            padding: 16px 20px;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #FFFFFF;
+            color: #000000;
+        }
+
+        .form-input:focus {
+            outline: none;
+            transform: translateY(-2px);
+            box-shadow: 6px 6px 0px #000000;
+        }
+
+        .form-input::placeholder {
+            color: #666666;
+            font-weight: 500;
+        }
+
+
+        .form-container {
+            border: 3px solid #000000;
+            background: #FFFFFF;
+            transition: all 0.3s ease;
+        }
+
+        .form-container:hover {
+            transform: translateY(-4px);
+            box-shadow: 8px 8px 0px #000000;
+        }
+
+        .asterisk {
+            font-size: 2rem;
+            font-weight: 700;
+            vertical-align: top;
+            line-height: 1;
+        }
+
+        .title-with-asterisk {
+            display: inline-flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slide-up {
+            animation: slideUp 0.8s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-white text-black min-h-screen flex flex-col">
+
+    <!-- Header -->
+    {% set header_style = 'light' %}
+    {% set header_position = 'static' %}
+    {% include '_header.html' %}
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-8 py-24 flex flex-col items-center justify-center">
+        <div class="w-full max-w-md animate-slide-up">
+            <div class="text-center mb-12">
+                <h1 class="hero-text mb-6">
+                    <span class="title-with-asterisk">
+                        <span class="asterisk">✱</span>REGISTRO
+                    </span>
+                </h1>
+                <p class="text-lg font-medium text-gray-600">
+                    Únete a la revolución de la moda AI
+                </p>
+            </div>
+
+            <div class="form-container p-8 rounded-lg">
+                <form method="POST" class="space-y-6">
+                    <div>
+                        <input type="text" name="username" placeholder="USUARIO" required
+                               class="form-input w-full">
+                    </div>
+                    <div>
+                        <input type="password" name="password" placeholder="CONTRASEÑA" required
+                               class="form-input w-full">
+                    </div>
+                    <button type="submit" class="pill-button w-full">
+                        REGISTRARSE
+                    </button>
+                </form>
+            </div>
+
+            <div class="text-center mt-8">
+                <p class="text-lg font-medium text-gray-600">
+                    ¿Ya tienes cuenta? 
+                    <a href="{{ url_for('auth.login') }}" class="text-black font-bold hover:underline">Login</a>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    {% include '_footer.html' %}
+
+</body>
+</html>

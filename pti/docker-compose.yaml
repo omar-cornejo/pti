@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: pti-backend
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./data:/app/data  
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - frontend
+
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: pti-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:3001
+    stdin_open: true
+    tty: true

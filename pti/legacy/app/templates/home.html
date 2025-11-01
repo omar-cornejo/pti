@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrendLens - AI-Powered Fashion Revolution</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .hero-text {
+      font-size: clamp(3rem, 10vw, 7rem);
+      line-height: 0.95;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-section {
+      background: #FFFFFF;
+      border-bottom: 3px solid #000000;
+    }
+
+    .fashion-image {
+      position: relative;
+      border: 3px solid #000000;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .fashion-image:hover {
+      transform: scale(1.02);
+    }
+
+    .pill-button {
+      border: 2px solid #000000;
+      border-radius: 50px;
+      padding: 14px 36px;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.875rem;
+      letter-spacing: 0.08em;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .pill-button:hover {
+      background-color: #000000;
+      color: #FFFFFF;
+      transform: translateY(-2px);
+    }
+
+    .pill-button-filled {
+      background-color: #000000;
+      color: #FFFFFF;
+    }
+
+    .pill-button-filled:hover {
+      background-color: #FFFFFF;
+      color: #000000;
+    }
+
+    .feature-card {
+      border: 3px solid #000000;
+      background: #FFFFFF;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 10px 10px 0px #000000;
+    }
+
+    .asterisk {
+      font-size: 4rem;
+      font-weight: 700;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-slide-up {
+      animation: slideUp 0.8s ease-out forwards;
+    }
+
+    .text-caption {
+      font-size: 1rem;
+      line-height: 1.7;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body class="bg-white text-black min-h-screen flex flex-col">
+  <!-- Header -->
+  {% set header_style = 'light' %}
+  {% set header_position = 'absolute' %}
+  {% include '_header.html' %}
+
+  <!-- Hero Section -->
+  <section class="hero-section relative overflow-hidden min-h-screen flex items-center">
+    <div class="container mx-auto px-8 py-32 pt-40">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <!-- Left Content -->
+        <div class="space-y-8 animate-slide-up">
+          <div class="asterisk mb-2">✱</div>
+          
+          <h1 class="hero-text">
+            AI-POWERED<br/>
+            FASHION<br/>
+            REVOLUTION
+          </h1>
+
+          <p class="text-caption max-w-lg">
+            Transform your style with cutting-edge AI technology. Generate, customize, and discover clothing designs that perfectly match your vision.
+          </p>
+
+          <div class="flex flex-wrap gap-4 pt-6">
+            <a
+              href="{{ url_for('auth.register') }}"
+              class="pill-button pill-button-filled"
+            >
+              Start Creating
+            </a>
+            <a
+              href="#"
+              class="pill-button"
+            >
+              Watch Demo
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Content - Fashion Image -->
+        <div class="relative animate-slide-up" style="animation-delay: 0.2s;">
+          <div class="fashion-image">
+            <div class="aspect-[4/3] bg-gradient-to-br from-orange-400 via-red-400 to-pink-400 flex items-center justify-center relative overflow-hidden">
+              <!-- Simulated Fashion Display -->
+              <div class="absolute inset-0 flex items-end justify-center pb-12 space-x-8">
+                <!-- Left Figure -->
+                <div class="relative">
+                  <div
+                    class="w-24 h-40 bg-gradient-to-b from-orange-300 to-orange-900 opacity-85"
+                    style="clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%)"
+                  ></div>
+                  <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-32 h-2 bg-orange-900 rounded-full blur-md opacity-40"></div>
+                </div>
+
+                <!-- Center Figure -->
+                <div class="relative">
+                  <div
+                    class="w-28 h-48 bg-gradient-to-b from-yellow-300 to-red-900 opacity-90"
+                    style="clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%)"
+                  ></div>
+                  <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-40 h-3 bg-red-900 rounded-full blur-lg opacity-50"></div>
+                </div>
+
+                <!-- Right Figure -->
+                <div class="relative">
+                  <div
+                    class="w-24 h-40 bg-gradient-to-b from-pink-300 to-pink-900 opacity-85"
+                    style="clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%)"
+                  ></div>
+                  <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-32 h-2 bg-pink-900 rounded-full blur-md opacity-40"></div>
+                </div>
+              </div>
+
+              <!-- UI Elements Overlay -->
+              <div class="absolute top-8 left-8 bg-white border-2 border-black p-4 space-y-2">
+                <div class="flex items-center space-x-2">
+                  <div class="w-3 h-3 bg-red-600 rounded-full"></div>
+                  <div class="w-16 h-2 bg-black"></div>
+                </div>
+                <div class="w-20 h-2 bg-gray-300"></div>
+                <div class="flex space-x-2 mt-3">
+                  <div class="w-7 h-7 bg-orange-500 border-2 border-black"></div>
+                  <div class="w-7 h-7 bg-red-500 border-2 border-black"></div>
+                  <div class="w-7 h-7 bg-pink-500 border-2 border-black"></div>
+                </div>
+              </div>
+
+              <div class="absolute top-8 right-8 bg-white border-2 border-black p-4">
+                <div class="w-16 h-16 border-4 border-black rounded-full flex items-center justify-center">
+                  <div class="w-8 h-8 bg-black rounded-full"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="bg-white py-24 border-t-3 border-black">
+    <div class="container mx-auto px-8">
+      <!-- Section Header -->
+      <div class="text-center mb-20">
+        <div class="asterisk mb-4 inline-block">✱</div>
+        <h2 class="text-5xl md:text-6xl font-bold uppercase tracking-tight mb-6">
+          Powerful AI Features
+        </h2>
+        <p class="text-caption max-w-2xl mx-auto">
+          Experience the future of fashion design with our cutting-edge technology
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="feature-card p-10">
+          <div class="text-6xl mb-6">🎨</div>
+          <h3 class="text-2xl font-bold mb-4 uppercase tracking-tight">
+            AI Design<br/>Generation
+          </h3>
+          <p class="text-caption">
+            Create unique clothing designs instantly with advanced AI algorithms.
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feature-card p-10">
+          <div class="text-6xl mb-6">⚙️</div>
+          <h3 class="text-2xl font-bold mb-4 uppercase tracking-tight">
+            Smart<br/>Customization
+          </h3>
+          <p class="text-caption">
+            Personalize every detail to match your unique style preferences.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feature-card p-10">
+          <div class="text-6xl mb-6">💡</div>
+          <h3 class="text-2xl font-bold mb-4 uppercase tracking-tight">
+            Trend<br/>Discovery
+          </h3>
+          <p class="text-caption">
+            Stay ahead with AI-powered fashion trend predictions and insights.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-24 px-8 border-t-3 border-black bg-white">
+    <div class="container mx-auto text-center">
+      <h2 class="text-4xl md:text-5xl font-bold uppercase tracking-tight mb-8">
+        Ready to Revolutionize<br/>Your Fashion Journey?
+      </h2>
+      <a href="{{ url_for('auth.register') }}" class="pill-button pill-button-filled">
+        Get Started Now
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  {% include '_footer.html' %}
+</body>
+</html>

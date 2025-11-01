@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Features - TrendLens</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap");
+
+      body {
+        font-family: "Space Grotesk", sans-serif;
+      }
+
+      .hero-text {
+        font-size: clamp(2.5rem, 8vw, 5rem);
+        line-height: 1;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+      }
+
+      .feature-card {
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 12px 12px 0px #000000;
+      }
+
+      .pill-button {
+        border: 2px solid #000000;
+        border-radius: 50px;
+        padding: 12px 28px;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.875rem;
+        letter-spacing: 0.05em;
+        transition: all 0.3s ease;
+        display: inline-block;
+      }
+
+      .pill-button:hover {
+        background-color: #000000;
+        color: #ffffff;
+        transform: translateY(-2px);
+      }
+
+      .pill-button-filled {
+        background-color: #000000;
+        color: #ffffff;
+      }
+
+      .pill-button-filled:hover {
+        background-color: #ffffff;
+        color: #000000;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 6px 14px;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .animate-slide-up {
+        animation: slideUp 0.8s ease-out forwards;
+      }
+
+      .gradient-card-1 {
+        background: linear-gradient(135deg, #d4f1f4 0%, #b5e6eb 100%);
+      }
+
+      .gradient-card-2 {
+        background: linear-gradient(135deg, #ffe5b4 0%, #ffd699 100%);
+      }
+
+      .gradient-card-3 {
+        background: linear-gradient(135deg, #e0bbe4 0%, #d8a7d8 100%);
+      }
+
+      .gradient-card-4 {
+        background: linear-gradient(135deg, #c1f0c1 0%, #a8e6a8 100%);
+      }
+
+      .gradient-card-5 {
+        background: linear-gradient(135deg, #ffd4d4 0%, #ffc0cb 100%);
+      }
+
+      .gradient-card-6 {
+        background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+      }
+
+      /* Carousel Card Styles */
+      .carousel-card {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform-origin: center center;
+        transition: transform 0.8s ease, opacity 0.6s ease;
+        opacity: 0;
+      }
+
+      .carousel-card:hover {
+        transform: translate(-50%, -55%) scale(0.95);
+        z-index: 25;
+        transition: all 0.4s ease;
+      }
+
+      .carousel-card:hover .feature-card,
+      .carousel-card:hover > div {
+        transform: translateY(-8px);
+        box-shadow: 12px 12px 0px #000000;
+        transition: all 0.4s ease;
+      }
+
+      .carousel-card.active {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        z-index: 30;
+      }
+
+      .carousel-card.prev {
+        opacity: 0.9;
+        transform: translate(calc(-50% - 350px), -50%) scale(0.9);
+        z-index: 20;
+      }
+
+      .carousel-card.next {
+        opacity: 0.9;
+        transform: translate(calc(-50% + 350px), -50%) scale(0.9);
+        z-index: 20;
+      }
+
+      .carousel-card.hidden {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+        z-index: 10;
+      }
+    </style>
+  </head>
+  <body class="bg-white text-black min-h-screen flex flex-col">
+    <!-- Header -->
+    {% set header_style = 'light' %} {% set header_position = 'static' %} {%
+    include '_header.html' %}
+
+    <!-- Hero Section -->
+    <section
+      class="relative overflow-hidden bg-white py-24 border-b-3 border-black"
+    >
+      <div class="container mx-auto px-8">
+        <div class="max-w-4xl mx-auto text-center">
+          <div class="text-6xl mb-6">✱</div>
+          <h1 class="hero-text mb-6">
+            FUNCIONALIDADES<br />
+            REVOLUCIONARIAS<br />
+            DE IA
+          </h1>
+          <p
+            class="text-xl text-gray-700 mb-10 max-w-2xl mx-auto leading-relaxed"
+          >
+            Descubre cómo nuestra inteligencia artificial transforma tu
+            experiencia de moda con detección automática de prendas y estilos
+            personalizados
+          </p>
+          <div class="flex flex-wrap gap-4 justify-center">
+            <button class="pill-button pill-button-filled">Ver Demo</button>
+            <button class="pill-button">Documentación API</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Features Section -->
+    <section class="py-24 bg-white">
+      <div class="container mx-auto px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold uppercase tracking-tight mb-4">
+            Mantén tu negocio en movimiento
+          </h2>
+          <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+            Libera a tu equipo y tu tiempo con políticas preestablecidas y
+            aprobaciones automatizadas, tarifas flexibles y atención al cliente
+            completa
+          </p>
+        </div>
+
+        <!-- Cards Grid -->
+        <div class="grid md:grid-cols-3 gap-6 mb-8">
+          <!-- Card 1 - Detection -->
+          <div
+            class="feature-card gradient-card-1 rounded-3xl p-8 animate-slide-up"
+          >
+            <div class="mb-6">
+              <div class="text-7xl mb-4">👔</div>
+              <h3 class="text-2xl font-bold mb-3 uppercase tracking-tight">
+                Detección Inteligente
+              </h3>
+              <p class="text-gray-800 leading-relaxed mb-6">
+                Reconocimiento automático de prendas, colores, texturas y
+                estilos con IA de alta precisión. Nuestro sistema identifica
+                hasta 50 categorías diferentes.
+              </p>
+            </div>
+            <a
+              href="{{ url_for('main.detection') }}"
+              class="pill-button text-sm"
+            >
+              Probar detección →
+            </a>
+          </div>
+
+          <!-- Card 2 - Outfit Creator -->
+          <div
+            class="feature-card gradient-card-2 rounded-3xl p-8 animate-slide-up"
+            style="animation-delay: 0.1s"
+          >
+            <div class="mb-6">
+              <div class="text-7xl mb-4">✨</div>
+              <h3 class="text-2xl font-bold mb-3 uppercase tracking-tight">
+                Creación de Outfits
+              </h3>
+              <p class="text-gray-800 leading-relaxed mb-6">
+                Combinaciones automáticas basadas en tendencias, ocasiones y
+                preferencias personales. Crea looks perfectos en segundos.
+              </p>
+            </div>
+            <button class="pill-button text-sm">Crear outfit →</button>
+          </div>
+
+          <!-- Card 3 - AI Adaptive -->
+          <div
+            class="feature-card gradient-card-3 rounded-3xl p-8 animate-slide-up"
+            style="animation-delay: 0.2s"
+          >
+            <div class="mb-6">
+              <div class="text-7xl mb-4">🧠</div>
+              <h3 class="text-2xl font-bold mb-3 uppercase tracking-tight">
+                IA Adaptativa
+              </h3>
+              <p class="text-gray-800 leading-relaxed mb-6">
+                Aprendizaje continuo de tus gustos y mejora constante de las
+                recomendaciones con cada interacción que realizas.
+              </p>
+            </div>
+            <button class="pill-button text-sm">Descubrir más →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Outfit Creator Carousel Section -->
+    <section class="py-24 bg-white">
+      <div class="container mx-auto px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold uppercase tracking-tight mb-4">
+            Creador Inteligente de Outfits
+          </h2>
+          <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+            Combina automáticamente tus prendas para crear looks perfectos según
+            la ocasión, clima y tus preferencias personales
+          </p>
+        </div>
+
+        <!-- Carousel Container -->
+        <div class="relative max-w-6xl mx-auto">
+          <!-- Cards Stack -->
+          <div
+            class="relative h-[500px] flex items-center justify-center"
+            id="carousel"
+          >
+            <!-- Card 1 -->
+            <div class="carousel-card w-[320px] position-left" data-card="0">
+              <div
+                class="bg-gradient-to-br from-lime-300 to-lime-400 rounded-3xl p-8 shadow-xl"
+              >
+                <div class="mb-6">
+                  <div class="text-6xl mb-4">🎨</div>
+                  <h3 class="text-2xl font-bold mb-3">Detección 24/7</h3>
+                  <p class="text-gray-800 text-sm leading-relaxed">
+                    Nuestro sistema de detección funciona las 24 horas del día
+                    para identificar prendas automáticamente. Sin importar la
+                    hora.
+                  </p>
+                </div>
+                <button
+                  class="pill-button text-sm bg-transparent border-2 border-black"
+                >
+                  Learn more →
+                </button>
+              </div>
+            </div>
+
+            <!-- Card 2 - Outfits Flexibles -->
+            <div class="carousel-card w-[380px]" data-card="1">
+              <div
+                class="feature-card gradient-card-2 rounded-3xl p-8 text-black"
+              >
+                <div class="mb-6">
+                  <div class="text-7xl mb-4">✨</div>
+                  <h3 class="text-2xl font-bold mb-3 uppercase tracking-tight">
+                    Outfits Flexibles
+                  </h3>
+                  <p class="text-gray-800 leading-relaxed mb-6">
+                    Cancela looks y procesa recomendaciones en segundos. Con
+                    combinaciones inteligentes y flexibles, tu guardarropa
+                    estará siempre optimizado.
+                  </p>
+                </div>
+                <button class="pill-button text-sm">Learn more →</button>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="carousel-card w-[320px] position-right" data-card="2">
+              <div
+                class="bg-gradient-to-br from-gray-100 to-gray-200 rounded-3xl p-8 shadow-xl"
+              >
+                <div class="mb-6">
+                  <div class="mb-4 flex gap-2">
+                    <span
+                      class="badge bg-cyan-400 text-white border-2 border-black"
+                      >✈</span
+                    >
+                    <span
+                      class="badge bg-pink-400 text-white border-2 border-black"
+                      >📋</span
+                    >
+                    <span
+                      class="badge bg-orange-400 text-white border-2 border-black"
+                      >⭕</span
+                    >
+                    <span
+                      class="badge bg-purple-400 text-white border-2 border-black"
+                      >👤</span
+                    >
+                  </div>
+                  <div class="mb-4">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="w-6 h-1 bg-black rounded-full"></div>
+                      <div class="w-20 h-1 bg-gray-400 rounded-full"></div>
+                    </div>
+                  </div>
+                  <h3 class="text-2xl font-bold mb-3">
+                    Políticas y Aprobaciones
+                  </h3>
+                  <p class="text-gray-700 text-sm leading-relaxed">
+                    Acelera las aprobaciones mientras mantienes los presupuestos
+                    bajo control, con revisores asignados y políticas
+                    preestablecidas que son fáciles de seguir.
+                  </p>
+                </div>
+                <button
+                  class="pill-button text-sm bg-transparent border-2 border-black"
+                >
+                  Learn more →
+                </button>
+              </div>
+            </div>
+
+            <!-- Card 4 (Hidden) -->
+            <div
+              class="carousel-card w-[320px] position-hidden-right"
+              data-card="3"
+            >
+              <div
+                class="bg-gradient-to-br from-purple-200 to-purple-300 rounded-3xl p-8 shadow-xl"
+              >
+                <div class="mb-6">
+                  <div class="text-6xl mb-4">💎</div>
+                  <h3 class="text-2xl font-bold mb-3">Tendencias Premium</h3>
+                  <p class="text-gray-800 text-sm leading-relaxed">
+                    Acceso exclusivo a las últimas tendencias de moda y
+                    recomendaciones de diseñadores reconocidos mundialmente.
+                  </p>
+                </div>
+                <button
+                  class="pill-button text-sm bg-transparent border-2 border-black"
+                >
+                  Learn more →
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation Controls -->
+          <div class="flex items-center justify-center gap-8 mt-12">
+            <div class="flex gap-2" id="carousel-dots">
+              <div
+                class="w-2 h-2 rounded-full bg-gray-300 dot"
+                data-index="0"
+              ></div>
+              <div
+                class="w-2 h-2 rounded-full bg-black dot"
+                data-index="1"
+              ></div>
+              <div
+                class="w-2 h-2 rounded-full bg-gray-300 dot"
+                data-index="2"
+              ></div>
+              <div
+                class="w-2 h-2 rounded-full bg-gray-300 dot"
+                data-index="3"
+              ></div>
+            </div>
+
+            <!-- Navigation Arrows -->
+            <div class="flex gap-3">
+              <button
+                id="prev-btn"
+                class="w-10 h-10 rounded-full border-2 border-black flex items-center justify-center hover:bg-black hover:text-white transition"
+              >
+                ←
+              </button>
+              <button
+                id="next-btn"
+                class="w-10 h-10 rounded-full border-2 border-black flex items-center justify-center hover:bg-black hover:text-white transition"
+              >
+                →
+              </button>
+            </div>
+
+            <button class="pill-button text-sm">Show all features →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Features Grid -->
+    <section class="relative py-24 bg-white overflow-hidden">
+      <div class="container mx-auto px-8 relative">
+        <!-- Main Content -->
+        <div class="text-center max-w-4xl mx-auto relative">
+          <!-- Floating Badges - Positioned relative to content -->
+          <div class="absolute top-4 left-0 bg-cyan-400 text-gray-900 px-6 py-4 rounded-full text-sm font-bold shadow-lg">
+             Personalización
+          </div>
+          
+          <div class="absolute top-0 right-0 bg-purple-500 text-white px-6 py-4 rounded-full text-sm font-bold shadow-lg">
+             Tiempo Real
+          </div>
+          
+          <div class="absolute top-48 -left-24 bg-pink-500 text-white px-6 py-4 rounded-full text-sm font-bold shadow-lg">
+             Preferencias
+          </div>
+          
+          <div class="absolute top-44 -right-20 bg-orange-500 text-white px-6 py-4 rounded-full text-sm font-bold shadow-lg">
+             Analytics
+          </div>
+          <h2 class="text-5xl md:text-6xl font-bold text-black mb-8 leading-tight">
+            Let's go places<br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
+              together
+            </span>
+          </h2>
+          
+          <p class="text-xl text-black-300 mb-12 max-w-2xl mx-auto leading-relaxed">
+            Nuestra IA aprende continuamente de tus preferencias. So you can cut the chaos,
+            keep moving, and invest in the moments that matter.
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+            <a href="{{ url_for('main.detection') }}" class="inline-flex items-center px-8 py-4 bg-green-500 hover:bg-green-600 text-white rounded-full font-bold transition-all transform hover:scale-105 shadow-lg">
+              Get to know us 
+              <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+            <button class="inline-flex items-center px-8 py-4 bg-transparent border border-gray-600 text-black rounded-full font-bold hover:bg-gray-800 hover:text-white transition-all">
+              Join the team
+              <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </button>
+          </div>
+
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    {% include '_footer.html' %}
+
+    <script>
+      const cards = document.querySelectorAll(".carousel-card");
+      const dots = document.querySelectorAll(".dot");
+      const prevBtn = document.getElementById("prev-btn");
+      const nextBtn = document.getElementById("next-btn");
+      const carousel = document.getElementById("carousel");
+
+      let currentIndex = 1;
+      const totalCards = cards.length;
+
+      function updateCarousel() {
+        cards.forEach((card, i) => {
+          card.classList.remove("prev", "next", "active", "hidden");
+
+          const diff = (i - currentIndex + totalCards) % totalCards;
+
+          if (diff === 0) {
+            card.classList.add("active");
+          } else if (diff === 1) {
+            card.classList.add("next");
+          } else if (diff === totalCards - 1) {
+            card.classList.add("prev");
+          } else {
+            card.classList.add("hidden");
+          }
+        });
+
+        dots.forEach((dot, i) => {
+          dot.classList.toggle("bg-black", i === currentIndex);
+          dot.classList.toggle("bg-gray-300", i !== currentIndex);
+        });
+      }
+
+      function nextSlide() {
+        currentIndex = (currentIndex + 1) % totalCards;
+        updateCarousel();
+      }
+
+      function prevSlide() {
+        currentIndex = (currentIndex - 1 + totalCards) % totalCards;
+        updateCarousel();
+      }
+
+      nextBtn.addEventListener("click", nextSlide);
+      prevBtn.addEventListener("click", prevSlide);
+
+      dots.forEach((dot, i) => {
+        dot.addEventListener("click", () => {
+          currentIndex = i;
+          updateCarousel();
+        });
+        dot.style.cursor = "pointer";
+      });
+
+      // let autoPlay = setInterval(nextSlide, 5000);
+      // carousel.addEventListener("mouseenter", () => clearInterval(autoPlay));
+      // carousel.addEventListener(
+      //   "mouseleave",
+      //   () => (autoPlay = setInterval(nextSlide, 5000))
+      // );
+
+      updateCarousel();
+    </script>
+  </body>
+</html>

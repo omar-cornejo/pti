@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Style Gallery - TrendLens</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+
+      body {
+        font-family: 'Space Grotesk', sans-serif;
+      }
+
+      .hero-text {
+        font-size: clamp(2.5rem, 8vw, 4rem);
+        line-height: 1;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+      }
+
+      .pill-button {
+        border: 3px solid #000000;
+        border-radius: 50px;
+        padding: 12px 28px;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        transition: all 0.3s ease;
+        display: inline-block;
+        background-color: #000000;
+        color: #FFFFFF;
+      }
+
+      .pill-button:hover {
+        background-color: #FFFFFF;
+        color: #000000;
+        transform: translateY(-2px);
+      }
+
+      .pill-button-outline {
+        border: 3px solid #000000;
+        border-radius: 50px;
+        padding: 12px 28px;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        transition: all 0.3s ease;
+        display: inline-block;
+        background-color: #FFFFFF;
+        color: #000000;
+      }
+
+      .pill-button-outline:hover {
+        background-color: #000000;
+        color: #FFFFFF;
+        transform: translateY(-2px);
+      }
+
+      .filter-card {
+        border: 3px solid #000000;
+        background: #FFFFFF;
+        transition: all 0.3s ease;
+      }
+
+      .filter-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 6px 6px 0px #000000;
+      }
+
+      .product-card {
+        border: 3px solid #000000;
+        background: #FFFFFF;
+        transition: all 0.3s ease;
+      }
+
+      .product-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 8px 8px 0px #000000;
+      }
+
+      .filter-tag {
+        border: 2px solid #000000;
+        background: #FFFFFF;
+        transition: all 0.3s ease;
+        border-radius: 50px;
+        padding: 8px 16px;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+      }
+
+      .filter-tag:hover {
+        background-color: #000000;
+        color: #FFFFFF;
+        transform: translateY(-1px);
+      }
+
+      .filter-tag.active {
+        background-color: #000000;
+        color: #FFFFFF;
+      }
+
+      .asterisk {
+        font-size: 3rem;
+        font-weight: 700;
+      }
+
+      .checkbox-custom {
+        border: 2px solid #000000;
+        background: #FFFFFF;
+        transition: all 0.2s ease;
+      }
+
+      .checkbox-custom:checked {
+        background-color: #000000;
+        border-color: #000000;
+      }
+
+      .color-swatch {
+        border: 3px solid #000000;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .color-swatch:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 2px #000000;
+      }
+
+      .size-button {
+        border: 2px solid #000000;
+        background: #FFFFFF;
+        transition: all 0.3s ease;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .size-button:hover {
+        background-color: #000000;
+        color: #FFFFFF;
+        transform: translateY(-1px);
+      }
+
+      .size-button.active {
+        background-color: #000000;
+        color: #FFFFFF;
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .animate-slide-up {
+        animation: slideUp 0.8s ease-out forwards;
+      }
+    </style>
+  </head>
+  <body class="bg-white text-black min-h-screen flex flex-col">
+    <!-- Header -->
+    {% set header_style = 'light' %}
+    {% set header_position = 'static' %}
+    {% include '_header.html' %}
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-8 py-16">
+      <!-- Hero Section -->
+      <div class="text-center mb-16 animate-slide-up">
+        <div class="asterisk mb-4">✱</div>
+        <h1 class="hero-text mb-6">STYLE<br/>GALLERY</h1>
+        <p class="text-lg font-medium text-gray-600 max-w-2xl mx-auto">
+          Descubre moda curada por AI de las mejores marcas del mundo
+        </p>
+      </div>
+
+      <div class="flex gap-12">
+        <!-- Sidebar Filters -->
+        <aside class="w-80 flex-shrink-0 animate-slide-up" style="animation-delay: 0.2s;">
+          <div class="filter-card rounded-lg p-8 sticky top-8">
+            <div class="flex items-center justify-between mb-8">
+              <h3 class="text-2xl font-bold">Filtros</h3>
+              <button class="pill-button-outline">Limpiar</button>
+            </div>
+
+            <!-- AI Recommendations -->
+            <div class="mb-8">
+              <div class="flex items-center space-x-3 mb-4">
+                <input type="checkbox" id="ai-rec" checked class="checkbox-custom w-5 h-5 rounded focus:ring-0" />
+                <label for="ai-rec" class="font-bold">Recomendaciones AI</label>
+              </div>
+              <p class="text-sm text-gray-600 mb-4">Basado en tus preferencias de estilo</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="filter-tag active">Minimalista</span>
+                <span class="filter-tag">Casual</span>
+                <span class="filter-tag">Verano</span>
+              </div>
+            </div>
+
+            <hr class="my-8 border-2 border-black" />
+
+            <!-- Brands -->
+            <div class="mb-8">
+              <h4 class="font-bold text-lg mb-4">Marcas</h4>
+              <div class="space-y-3">
+                <label class="flex items-center space-x-3 cursor-pointer">
+                  <input type="checkbox" class="checkbox-custom w-4 h-4 rounded" />
+                  <span class="font-medium">ZARA (234)</span>
+                </label>
+                <label class="flex items-center space-x-3 cursor-pointer">
+                  <input type="checkbox" class="checkbox-custom w-4 h-4 rounded" />
+                  <span class="font-medium">H&M (189)</span>
+                </label>
+                <label class="flex items-center space-x-3 cursor-pointer">
+                  <input type="checkbox" class="checkbox-custom w-4 h-4 rounded" />
+                  <span class="font-medium">UNIQLO (156)</span>
+                </label>
+                <label class="flex items-center space-x-3 cursor-pointer">
+                  <input type="checkbox" class="checkbox-custom w-4 h-4 rounded" />
+                  <span class="font-medium">COS (98)</span>
+                </label>
+                <label class="flex items-center space-x-3 cursor-pointer">
+                  <input type="checkbox" class="checkbox-custom w-4 h-4 rounded" />
+                  <span class="font-medium">ARKET (87)</span>
+                </label>
+              </div>
+              <button class="pill-button-outline mt-4">Ver Más</button>
+            </div>
+
+            <hr class="my-8 border-2 border-black" />
+
+            <!-- Category -->
+            <div class="mb-8">
+              <h4 class="font-bold text-lg mb-4">Categoría</h4>
+              <div class="space-y-3">
+                <label class="flex items-center space-x-3 cursor-pointer">
+                  <input type="checkbox" class="checkbox-custom w-4 h-4 rounded" />
+                  <span class="font-medium">Camisetas</span>
+                </label>
+                <label class="flex items-center space-x-3 cursor-pointer">
+                  <input type="checkbox" class="checkbox-custom w-4 h-4 rounded" />
+                  <span class="font-medium">Pantalones</span>
+                </label>
+                <label class="flex items-center space-x-3 cursor-pointer">
+                  <input type="checkbox" class="checkbox-custom w-4 h-4 rounded" />
+                  <span class="font-medium">Vestidos</span>
+                </label>
+                <label class="flex items-center space-x-3 cursor-pointer">
+                  <input type="checkbox" class="checkbox-custom w-4 h-4 rounded" />
+                  <span class="font-medium">Chaquetas</span>
+                </label>
+                <label class="flex items-center space-x-3 cursor-pointer">
+                  <input type="checkbox" class="checkbox-custom w-4 h-4 rounded" />
+                  <span class="font-medium">Zapatos</span>
+                </label>
+              </div>
+            </div>
+
+            <hr class="my-8 border-2 border-black" />
+
+            <!-- Price Range -->
+            <div class="mb-8">
+              <h4 class="font-bold text-lg mb-4">Rango de Precio</h4>
+              <div class="space-y-3">
+                <label class="flex items-center space-x-3 cursor-pointer">
+                  <input type="checkbox" class="checkbox-custom w-4 h-4 rounded" />
+                  <span class="font-medium">$0 - $50</span>
+                </label>
+                <label class="flex items-center space-x-3 cursor-pointer">
+                  <input type="checkbox" class="checkbox-custom w-4 h-4 rounded" />
+                  <span class="font-medium">$50 - $100</span>
+                </label>
+                <label class="flex items-center space-x-3 cursor-pointer">
+                  <input type="checkbox" class="checkbox-custom w-4 h-4 rounded" />
+                  <span class="font-medium">$100 - $200</span>
+                </label>
+                <label class="flex items-center space-x-3 cursor-pointer">
+                  <input type="checkbox" class="checkbox-custom w-4 h-4 rounded" />
+                  <span class="font-medium">$200+</span>
+                </label>
+              </div>
+            </div>
+
+            <hr class="my-8 border-2 border-black" />
+
+            <!-- Colors -->
+            <div class="mb-8">
+              <h4 class="font-bold text-lg mb-4">Colores</h4>
+              <div class="grid grid-cols-6 gap-3">
+                <button class="color-swatch w-10 h-10 bg-black rounded-full"></button>
+                <button class="color-swatch w-10 h-10 bg-white rounded-full"></button>
+                <button class="color-swatch w-10 h-10 bg-gray-500 rounded-full"></button>
+                <button class="color-swatch w-10 h-10 bg-red-500 rounded-full"></button>
+                <button class="color-swatch w-10 h-10 bg-blue-500 rounded-full"></button>
+                <button class="color-swatch w-10 h-10 bg-green-500 rounded-full"></button>
+                <button class="color-swatch w-10 h-10 bg-yellow-500 rounded-full"></button>
+                <button class="color-swatch w-10 h-10 bg-purple-500 rounded-full"></button>
+                <button class="color-swatch w-10 h-10 bg-pink-500 rounded-full"></button>
+                <button class="color-swatch w-10 h-10 bg-orange-500 rounded-full"></button>
+                <button class="color-swatch w-10 h-10 bg-indigo-500 rounded-full"></button>
+                <button class="color-swatch w-10 h-10 bg-teal-500 rounded-full"></button>
+              </div>
+            </div>
+
+            <hr class="my-8 border-2 border-black" />
+
+            <!-- Size -->
+            <div>
+              <h4 class="font-bold text-lg mb-4">Talla</h4>
+              <div class="grid grid-cols-3 gap-3">
+                <button class="size-button py-3 px-4 rounded-lg">XS</button>
+                <button class="size-button py-3 px-4 rounded-lg">S</button>
+                <button class="size-button py-3 px-4 rounded-lg active">M</button>
+                <button class="size-button py-3 px-4 rounded-lg">L</button>
+                <button class="size-button py-3 px-4 rounded-lg">XL</button>
+                <button class="size-button py-3 px-4 rounded-lg">XXL</button>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Gallery Content -->
+        <main class="flex-1 animate-slide-up" style="animation-delay: 0.4s;">
+          <!-- Results Info & Sort -->
+          <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center space-x-4">
+              <p class="font-medium">Mostrando 1,247 resultados</p>
+              <button class="pill-button-outline">
+                🔥 Trending
+              </button>
+            </div>
+
+            <div class="flex items-center space-x-4">
+              <span class="font-medium">Ordenar por:</span>
+              <select class="border-3 border-black rounded-lg px-4 py-2 font-medium bg-white">
+                <option>Relevancia</option>
+                <option>Precio: Menor a Mayor</option>
+                <option>Precio: Mayor a Menor</option>
+                <option>Más Nuevo</option>
+              </select>
+              <button class="pill-button">
+                ⊞ Grid
+              </button>
+              <button class="pill-button-outline">
+                ☰ Lista
+              </button>
+            </div>
+          </div>
+
+          <!-- Products Grid -->
+          <div class="grid grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Product 1 -->
+            <div class="product-card rounded-lg overflow-hidden">
+              <div class="relative bg-gray-100 aspect-square">
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="w-20 h-32 bg-black rounded-lg"></div>
+                </div>
+                <div class="absolute top-4 left-4">
+                  <span class="pill-button text-xs">AI Pick</span>
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="font-bold text-lg mb-2">Camiseta Minimalista</h3>
+                <p class="text-gray-600 mb-3">ARKET</p>
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-xl">$49</span>
+                  <button class="pill-button-outline">Ver</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card rounded-lg overflow-hidden">
+              <div class="relative bg-blue-50 aspect-square">
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="w-24 h-28 bg-blue-600 rounded-lg"></div>
+                </div>
+                <div class="absolute top-4 left-4">
+                  <span class="pill-button-outline text-xs">Nuevo</span>
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="font-bold text-lg mb-2">Blazer Estructurado</h3>
+                <p class="text-gray-600 mb-3">COS</p>
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-xl">$159</span>
+                  <button class="pill-button-outline">Ver</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card rounded-lg overflow-hidden">
+              <div class="relative bg-amber-50 aspect-square">
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="w-20 h-36 bg-amber-600 rounded-lg"></div>
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="font-bold text-lg mb-2">Vestido Fluido</h3>
+                <p class="text-gray-600 mb-3">ZARA</p>
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-xl">$89</span>
+                  <button class="pill-button-outline">Ver</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card rounded-lg overflow-hidden">
+              <div class="relative bg-green-50 aspect-square">
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="w-22 h-30 bg-green-700 rounded-lg"></div>
+                </div>
+                <div class="absolute top-4 left-4">
+                  <span class="pill-button text-xs">Sale</span>
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="font-bold text-lg mb-2">Pantalón Wide Leg</h3>
+                <p class="text-gray-600 mb-3">H&M</p>
+                <div class="flex items-center justify-between">
+                  <div>
+                    <span class="font-bold text-xl">$35</span>
+                    <span class="text-gray-500 line-through ml-2">$59</span>
+                  </div>
+                  <button class="pill-button-outline">Ver</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="product-card rounded-lg overflow-hidden">
+              <div class="relative bg-purple-50 aspect-square">
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="w-18 h-32 bg-purple-600 rounded-lg"></div>
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="font-bold text-lg mb-2">Top Asimétrico</h3>
+                <p class="text-gray-600 mb-3">UNIQLO</p>
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-xl">$29</span>
+                  <button class="pill-button-outline">Ver</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="product-card rounded-lg overflow-hidden">
+              <div class="relative bg-rose-50 aspect-square">
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="w-24 h-28 bg-rose-500 rounded-lg"></div>
+                </div>
+                <div class="absolute top-4 left-4">
+                  <span class="pill-button text-xs">AI Pick</span>
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="font-bold text-lg mb-2">Chaqueta Oversize</h3>
+                <p class="text-gray-600 mb-3">ARKET</p>
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-xl">$199</span>
+                  <button class="pill-button-outline">Ver</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagination -->
+          <div class="flex items-center justify-center space-x-3 mt-16">
+            <button class="pill-button-outline" disabled>
+              ←
+            </button>
+            <button class="pill-button">1</button>
+            <button class="pill-button-outline">2</button>
+            <button class="pill-button-outline">3</button>
+            <span class="text-gray-400">...</span>
+            <button class="pill-button-outline">42</button>
+            <button class="pill-button-outline">
+              →
+            </button>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    {% include '_footer.html' %}
+  </body>
+</html>
